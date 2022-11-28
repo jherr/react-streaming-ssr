@@ -1,0 +1,4 @@
+{
+  "ignore": ["server.js", "node_modules"],
+  "presets": ["react-app"]
+}
