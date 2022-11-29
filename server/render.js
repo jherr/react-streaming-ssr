@@ -5,15 +5,11 @@ import Html from "../src/html";
 import App from "../src/App";
 
 export function streamingRender(res) {
-  let stream = null;
-
   const dataPromise = new Promise((resolve) =>
-    setTimeout(() => {
-      resolve("Something non-critical, streamed");
-    }, 2000)
+    setTimeout(() => resolve("Something non-critical, streamed"), 2000)
   );
 
-  stream = renderToPipeableStream(
+  const stream = renderToPipeableStream(
     <Html dataPromise={dataPromise}>
       <App dataAsPromise={dataPromise} />
     </Html>,
@@ -26,6 +22,7 @@ export function streamingRender(res) {
 }
 
 export function simpleRender(res) {
+  // Simulate waiting around for some content that we want to stream instead
   const dataPromise = new Promise((resolve) =>
     setTimeout(() => resolve("Something non-critical, blocked"), 2000)
   );

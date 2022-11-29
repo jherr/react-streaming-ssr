@@ -9,8 +9,17 @@ function DataDisplay({ dataAsString, dataAsPromise }) {
   return <p>{value}</p>;
 }
 
-export default function App(props) {
+function Counter() {
   const counter = useState(0);
+
+  return (
+    <button onClick={() => counter[1](counter[0] + 1)}>
+      Count is {counter[0]}
+    </button>
+  );
+}
+
+export default function App(props) {
   return (
     <>
       <h2>Critical Content</h2>
@@ -19,7 +28,7 @@ export default function App(props) {
       <Suspense fallback={<div>Loading...</div>}>
         <DataDisplay {...props} />
       </Suspense>
-      <button onClick={() => counter[1](counter[0] + 1)}>{counter[0]}</button>
+      <Counter />
     </>
   );
 }

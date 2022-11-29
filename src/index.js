@@ -8,8 +8,7 @@ const dataPromise = new Promise((resolve) => {
   window.setData = (data) => resolve(data);
 });
 
-const AppWrapper = () => {
-  return <App dataAsPromise={dataPromise} />;
-};
-
-hydrateRoot(document.getElementById("app"), <AppWrapper />);
+hydrateRoot(
+  document.getElementById("app"),
+  <App dataAsPromise={dataPromise} />
+);

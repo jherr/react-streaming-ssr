@@ -21,8 +21,8 @@ export default ({ children, dataPromise }) => {
       <body>
         <div id="app">{children}</div>
       </body>
-      <script suppressHydrationWarning src="/main.js"></script>
-      <Suspense fallback={<script></script>}>
+      <script src="/main.js"></script>
+      <Suspense>
         <DataScript dataPromise={dataPromise} />
       </Suspense>
     </html>
