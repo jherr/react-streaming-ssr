@@ -1,7 +1,7 @@
 "use strict";
 
 const express = require("express");
-const { streamingRender, simpleRender } = require("./src/render");
+const { streamingRender, simpleRender } = require("./server/render");
 
 const app = express();
 app.get("/", (req, res) => {
