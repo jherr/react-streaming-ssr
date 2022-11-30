@@ -10,12 +10,10 @@ function DataDisplay({ dataAsString, dataAsPromise }) {
 }
 
 function Counter() {
-  const counter = useState(0);
+  const [counter, setCounter] = useState(0);
 
   return (
-    <button onClick={() => counter[1](counter[0] + 1)}>
-      Count is {counter[0]}
-    </button>
+    <button onClick={() => setCounter(counter + 1)}>Count is {counter}</button>
   );
 }
 
