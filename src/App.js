@@ -21,7 +21,7 @@ export default function App(props) {
   return (
     <>
       <h2>Critical Content</h2>
-      <p>Something really important here</p>
+      <p>Critical Data: {props.criticalData}</p>
       <h2>Non-Critical Content</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <DataDisplay {...props} />

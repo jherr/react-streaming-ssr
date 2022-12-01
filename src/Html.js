@@ -12,7 +12,7 @@ const DataScript = ({ dataPromise }) => {
   );
 };
 
-export default ({ children, dataPromise }) => {
+export default ({ children, dataPromise, criticalData }) => {
   return (
     <html>
       <head>
@@ -21,6 +21,11 @@ export default ({ children, dataPromise }) => {
       <body>
         <div id="app">{children}</div>
       </body>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.criticalData = ${JSON.stringify(criticalData)};`,
+        }}
+      ></script>
       <script src="/main.js"></script>
       <Suspense>
         <DataScript dataPromise={dataPromise} />
