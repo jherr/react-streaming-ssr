@@ -3,11 +3,11 @@ import { hydrateRoot } from "react-dom/client";
 
 import App from "./App";
 
-const dataPromise = new Promise((resolve) => {
-  window.setData = (data) => resolve(data);
+const comments = new Promise((resolve) => {
+  window.setComments = (data) => resolve(data);
 });
 
 hydrateRoot(
   document.getElementById("app"),
-  <App dataAsPromise={dataPromise} criticalData={window.criticalData} />
+  <App comments={comments} description={window.__description} />
 );

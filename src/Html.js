@@ -1,34 +1,34 @@
 import * as React from "react";
 import { Suspense, use } from "react";
 
-const DataScript = ({ dataPromise }) => {
-  const data = use(dataPromise);
+const CommentsScript = ({ comments }) => {
+  const data = Array.isArray(comments) ? comments : use(comments);
   return (
     <script
       dangerouslySetInnerHTML={{
-        __html: `window.setData(${JSON.stringify(data)});`,
+        __html: `window.setComments(${JSON.stringify(data)});`,
       }}
     ></script>
   );
 };
 
-export default ({ children, dataPromise, criticalData }) => {
+export default ({ children, comments, description }) => {
   return (
     <html>
       <head>
-        <style>{`body { font-family: sans-serif; }`}</style>
+        <link rel="stylesheet" href="/index.css" />
       </head>
       <body>
         <div id="app">{children}</div>
       </body>
       <script
         dangerouslySetInnerHTML={{
-          __html: `window.criticalData = ${JSON.stringify(criticalData)};`,
+          __html: `window.__description = ${JSON.stringify(description)};`,
         }}
       ></script>
       <script src="/main.js"></script>
       <Suspense>
-        <DataScript dataPromise={dataPromise} />
+        <CommentsScript comments={comments} />
       </Suspense>
     </html>
   );

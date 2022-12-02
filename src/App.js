@@ -1,32 +1,51 @@
 import * as React from "react";
 import { Suspense, use, useState } from "react";
 
-function DataDisplay({ dataAsString, dataAsPromise }) {
-  let value = dataAsString;
-  if (!value && dataAsPromise) {
-    value = use(dataAsPromise);
-  }
-  return <p>{value}</p>;
-}
-
-function Counter() {
-  const [counter, setCounter] = useState(0);
+function Comments({ comments }) {
+  const [comment, setComment] = useState("");
+  const [currentComments, setCurrentComments] = useState(
+    Array.isArray(comments) ? comments : use(comments)
+  );
 
   return (
-    <button onClick={() => setCounter(counter + 1)}>Count is {counter}</button>
+    <div>
+      <ul>
+        {currentComments.map((comment) => (
+          <li key={comment}>{comment}</li>
+        ))}
+      </ul>
+
+      <input
+        type="text"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+      />
+      <button
+        onClick={() => {
+          setCurrentComments([...currentComments, comment]);
+          setComment("");
+        }}
+      >
+        Add Comment
+      </button>
+    </div>
   );
 }
 
 export default function App(props) {
   return (
     <>
-      <h2>Critical Content</h2>
-      <p>Critical Data: {props.criticalData}</p>
-      <h2>Non-Critical Content</h2>
+      <header>Header</header>
+
+      <h2>Product Description</h2>
+      <p>{props.description}</p>
+
+      <h2>Comments</h2>
       <Suspense fallback={<div>Loading...</div>}>
-        <DataDisplay {...props} />
+        <Comments {...props} />
       </Suspense>
-      <Counter />
+
+      <footer>Footer</footer>
     </>
   );
 }

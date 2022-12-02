@@ -8,6 +8,7 @@ app.get("/", (_req, res) => {
   streamingRender(res);
 });
 app.use(express.static("build"));
+app.use(express.static("public"));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

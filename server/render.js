@@ -4,23 +4,23 @@ import { renderToPipeableStream, renderToString } from "react-dom/server";
 import Html from "../src/html";
 import App from "../src/App";
 
-const criticalDataFetch = () =>
+const fetchDescription = () =>
   new Promise((resolve) =>
-    setTimeout(() => resolve("Some really important content"), 250)
+    setTimeout(() => resolve("Product information ready for SEO"), 250)
   );
 
-const nonCriticalDataFetch = () =>
+const commentsFetch = () =>
   new Promise((resolve) =>
-    setTimeout(() => resolve("Something non-critical, streamed"), 2000)
+    setTimeout(() => resolve(["Comment 1", "Comment 2", "Comment 3"]), 2000)
   );
 
 export async function streamingRender(res) {
-  const criticalData = await criticalDataFetch();
-  const dataPromise = nonCriticalDataFetch();
+  const description = await fetchDescription();
+  const comments = commentsFetch();
 
   const stream = renderToPipeableStream(
-    <Html criticalData={criticalData} dataPromise={dataPromise}>
-      <App criticalData={criticalData} dataAsPromise={dataPromise} />
+    <Html description={description} comments={comments}>
+      <App description={description} comments={comments} />
     </Html>,
     {
       onShellReady() {
@@ -31,20 +31,14 @@ export async function streamingRender(res) {
 }
 
 export async function simpleRender(res) {
-  const criticalData = await criticalDataFetch();
+  const description = await fetchDescription();
+  const comments = await commentsFetch();
 
-  // Simulate waiting around for some content that we want to stream instead
-  const dataPromise = new Promise((resolve) =>
-    setTimeout(() => resolve("Something non-critical, blocked"), 2000)
+  res.send(
+    renderToString(
+      <Html description={description} comments={comments}>
+        <App description={description} comments={comments} />
+      </Html>
+    )
   );
-
-  dataPromise.then((dataString) => {
-    res.send(
-      renderToString(
-        <Html>
-          <App criticalData={criticalData} dataAsString={dataString} />
-        </Html>
-      )
-    );
-  });
 }
