@@ -5,7 +5,7 @@ const { streamingRender, simpleRender } = require("./server/render");
 
 const app = express();
 app.get("/", (_req, res) => {
-  streamingRender(res);
+  simpleRender(res);
 });
 app.use(express.static("build"));
 app.use(express.static("public"));

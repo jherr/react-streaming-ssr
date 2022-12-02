@@ -18,9 +18,11 @@ export default ({ children, comments, description }) => {
       <head>
         <link rel="stylesheet" href="/index.css" />
       </head>
+
       <body>
         <div id="app">{children}</div>
       </body>
+
       <script
         dangerouslySetInnerHTML={{
           __html: `window.__description = ${JSON.stringify(description)};`,
